@@ -34,7 +34,7 @@ const Navbar = () => {
             >
               Nutrabalance
             </h1>
-            <ul className="hidden md:flex space-x-4">
+            <ul className="flex space-x-4">
               <li
                 className="hover:bg-teal-500 px-3 py-2 rounded cursor-pointer"
                 onClick={() => navigate("/dashboard")}
