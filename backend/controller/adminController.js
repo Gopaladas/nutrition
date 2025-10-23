@@ -4,7 +4,7 @@ import Item from "../model/itemSchema.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import cloudinary from "../config/cloudinary.js";
-import { uploadImageToCloudinary } from "../utils/cloudinaryupload.js";
+import { uploadImageToCloudinary } from "../utils/cloudinaryUpload.js";
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
@@ -194,22 +194,13 @@ export const addItem = async (req, res) => {
         .status(400)
         .json({ message: "Name, price, and category required" });
 
-    const imageUrls = [];
-
-    // Handle image uploads to Cloudinary
-    if (images && images.length > 0) {
-      for (const img of images) {
-        const uploadedUrl = await uploadImageToCloudinary(img, "items");
-        imageUrls.push(uploadedUrl);
-      }
-    }
-
+    // No need to upload images again
     const item = await Item.create({
       name,
       description,
       price,
       category: categoryId,
-      images: imageUrls,
+      images: images || [], // just save the URLs sent from frontend
       nutrition,
       createdBy: req.user.id,
     });
